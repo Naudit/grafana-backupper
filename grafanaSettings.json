@@ -2,9 +2,9 @@
   "general": {
     "debug": true,
     "verify_ssl": true,
-    "backup_dir": "dashbs.bak",
+    "backup_dir": "dashbs",
     "backup_file_format": "%Y%m%d%H%M",
-    "archive":  false,
+    "archive":  true,
     "timestamp_backups": false,
     "pretty_print": false
   },
