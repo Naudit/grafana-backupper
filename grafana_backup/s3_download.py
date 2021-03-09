@@ -1,5 +1,5 @@
-import boto3
-from botocore.exceptions import NoCredentialsError
+#import boto3
+#from botocore.exceptions import NoCredentialsError
 
 
 def main(args, settings):
@@ -12,25 +12,25 @@ def main(args, settings):
     aws_secret_access_key = settings.get('AWS_SECRET_ACCESS_KEY')
     aws_endpoint_url = settings.get('AWS_ENDPOINT_URL')
 
-    session = boto3.Session(
-        aws_access_key_id=aws_access_key_id,
-        aws_secret_access_key=aws_secret_access_key,
-        region_name=aws_default_region
-    )
+    #session = boto3.Session(
+    #    aws_access_key_id=aws_access_key_id,
+    #    aws_secret_access_key=aws_secret_access_key,
+    #    region_name=aws_default_region
+    #)
 
-    s3 = session.resource(
-        service_name='s3',
-        endpoint_url=aws_endpoint_url
-    )
+    #s3 = session.resource(
+    #    service_name='s3',
+    #    endpoint_url=aws_endpoint_url
+    #)
 
-    s3_object = s3.Object(aws_s3_bucket_name, '{0}/{1}'.format(aws_s3_bucket_key, arg_archive_file))
+    #s3_object = s3.Object(aws_s3_bucket_name, '{0}/{1}'.format(aws_s3_bucket_key, arg_archive_file))
 
-    try:
-        # .read() left off on purpose, tarfile.open() takes care of that part
-        s3_data = s3_object.get()['Body']
-        print("Download from S3 was successful")
-    except NoCredentialsError:
-        print("Credentials not available")
-        return False
+    #try:
+    #    # .read() left off on purpose, tarfile.open() takes care of that part
+    #    s3_data = s3_object.get()['Body']
+    #    print("Download from S3 was successful")
+    #except NoCredentialsError:
+    #    print("Credentials not available")
+    #    return False
 
-    return s3_data
+    #return s3_data

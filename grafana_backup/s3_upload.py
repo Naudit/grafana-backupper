@@ -1,5 +1,5 @@
-import boto3
-from botocore.exceptions import NoCredentialsError
+#import boto3
+#from botocore.exceptions import NoCredentialsError
 
 
 def main(args, settings):
@@ -16,27 +16,27 @@ def main(args, settings):
     s3_file_name = '{0}.tar.gz'.format(timestamp)
     archive_file = '{0}/{1}'.format(backup_dir, s3_file_name)
 
-    session = boto3.Session(
-        aws_access_key_id=aws_access_key_id,
-        aws_secret_access_key=aws_secret_access_key,
-        region_name=aws_default_region
-    )
+    #session = boto3.Session(
+    #    aws_access_key_id=aws_access_key_id,
+    #    aws_secret_access_key=aws_secret_access_key,
+    #    region_name=aws_default_region
+    #)
 
-    s3 = session.resource(
-        service_name='s3',
-        endpoint_url=aws_endpoint_url
-    )
+    #s3 = session.resource(
+    #    service_name='s3',
+    #    endpoint_url=aws_endpoint_url
+    #)
 
-    s3_object = s3.Object(aws_s3_bucket_name, '{0}/{1}'.format(aws_s3_bucket_key, s3_file_name))
+    #s3_object = s3.Object(aws_s3_bucket_name, '{0}/{1}'.format(aws_s3_bucket_key, s3_file_name))
 
-    try:
-        s3_object.put(Body=open(archive_file, 'rb'))
-        print("Upload to S3 was successful")
-    except FileNotFoundError:
-        print("The file was not found")
-        return False
-    except NoCredentialsError:
-        print("Credentials not available")
-        return False
+    #try:
+    #    s3_object.put(Body=open(archive_file, 'rb'))
+    #    print("Upload to S3 was successful")
+    #except FileNotFoundError:
+    #    print("The file was not found")
+    #    return False
+    #except NoCredentialsError:
+    #    print("Credentials not available")
+    #    return False
 
     return True

@@ -6,6 +6,7 @@ from grafana_backup.commons import to_python2_and_3_compatible_string, print_hor
 
 def main(args, settings):
     backup_dir = settings.get('BACKUP_DIR')
+    timestamp_output = settings.get('TIMESTAMP_OUTPUT')
     timestamp = settings.get('TIMESTAMP')
     limit = settings.get('SEARCH_API_LIMIT')
     grafana_url = settings.get('GRAFANA_URL')
@@ -17,8 +18,12 @@ def main(args, settings):
     uid_support = settings.get('UID_SUPPORT')
     paging_support = settings.get('PAGING_SUPPORT')
 
-    folder_path = '{0}/dashboards/{1}'.format(backup_dir, timestamp)
-    log_file = 'dashboards_{0}.txt'.format(timestamp)
+    if timestamp_output:
+        folder_path = '{0}/dashboards/{1}'.format(backup_dir, timestamp)
+        log_file = 'dashboards_{0}.txt'.format(timestamp)
+    else:
+        folder_path = '{0}/dashboards'.format(backup_dir)
+        log_file = 'dashboards.txt'
 
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)

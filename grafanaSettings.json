@@ -2,10 +2,10 @@
   "general": {
     "debug": true,
     "verify_ssl": true,
-    "backup_dir": "_OUTPUT_",
+    "backup_dir": "dashbs.bak",
     "backup_file_format": "%Y%m%d%H%M",
-    "archive":  true,
-    "timestamp_backups": true,
+    "archive":  false,
+    "timestamp_backups": false,
     "pretty_print": false
   },
   "grafana": {

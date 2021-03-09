@@ -25,7 +25,10 @@ def main(config_path):
     client_cert = config.get('general', {}).get('client_cert', None)
     backup_dir = config.get('general', {}).get('backup_dir', '_OUTPUT_')
     backup_file_format = config.get('general', {}).get('backup_file_format', '%Y%m%d%H%M')
+    archive_output = config.get('general', {}).get('archive', True)
+    timestamp_output = config.get('general', {}).get('timestamp_backups', True)
     pretty_print = config.get('general', {}).get('pretty_print', False)
+
     aws_s3_bucket_name = config.get('aws', {}).get('s3_bucket_name', '')
     aws_s3_bucket_key = config.get('aws', {}).get('s3_bucket_key', '')
     aws_default_region = config.get('aws', {}).get('default_region', '')
@@ -62,6 +65,14 @@ def main(config_path):
     CLIENT_CERT = os.getenv('CLIENT_CERT', client_cert)
 
     BACKUP_DIR = os.getenv('BACKUP_DIR', backup_dir)
+
+    ARCHIVE_OUTPUT = os.getenv('ARCHIVE_OUTPUT', archive_output)
+    if isinstance(ARCHIVE_OUTPUT, str):
+        ARCHIVE_OUTPUT = json.loads(ARCHIVE_OUTPUT.lower())  # convert environment variable string to bool
+
+    TIMESTAMP_OUTPUT = os.getenv('TIMESTAMP_OUTPUT', timestamp_output)
+    if isinstance(TIMESTAMP_OUTPUT, str):
+        TIMESTAMP_OUTPUT = json.loads(TIMESTAMP_OUTPUT.lower())  # convert environment variable string to bool
 
     PRETTY_PRINT = os.getenv('PRETTY_PRINT', pretty_print)
     if isinstance(PRETTY_PRINT, str):
@@ -106,8 +117,12 @@ def main(config_path):
     config_dict['DEBUG'] = DEBUG
     config_dict['VERIFY_SSL'] = VERIFY_SSL
     config_dict['CLIENT_CERT'] = CLIENT_CERT
+
     config_dict['BACKUP_DIR'] = BACKUP_DIR
+    config_dict['ARCHIVE_OUTPUT'] = ARCHIVE_OUTPUT
+    config_dict['TIMESTAMP_OUTPUT'] = TIMESTAMP_OUTPUT
     config_dict['PRETTY_PRINT'] = PRETTY_PRINT
+
     config_dict['EXTRA_HEADERS'] = EXTRA_HEADERS
     config_dict['HTTP_GET_HEADERS'] = HTTP_GET_HEADERS
     config_dict['HTTP_POST_HEADERS'] = HTTP_POST_HEADERS

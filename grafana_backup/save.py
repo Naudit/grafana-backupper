@@ -4,15 +4,16 @@ from grafana_backup.save_datasources import main as save_datasources
 from grafana_backup.save_folders import main as save_folders
 from grafana_backup.save_alert_channels import main as save_alert_channels
 from grafana_backup.archive import main as archive
-from grafana_backup.s3_upload import main as s3_upload
 from grafana_backup.save_orgs import main as save_orgs
 from grafana_backup.save_users import main as save_users
 import sys
-
+import os.path
+from os import path
+import shutil
 
 def main(args, settings):
     arg_components = args.get('--components', False)
-    arg_no_archive = args.get('--no-archive', False)
+    arg_no_archive = args.get('--no-archive', False) or (not settings.get('ARCHIVE_OUTPUT'))
 
     backup_functions = {'dashboards': save_dashboards,
                         'datasources': save_datasources,
@@ -31,6 +32,18 @@ def main(args, settings):
     settings.update({'UID_SUPPORT': uid_support})
     settings.update({'PAGING_SUPPORT': paging_support})
 
+    if settings.get('TIMESTAMP_OUTPUT') == False:
+        # If we are not timestamping outputs, we should delete any existing output files before generating new ones
+        # However we don't want to just delete the whole directory since there may be, e.g. a .git directory in there
+        backup_dir = settings.get('BACKUP_DIR')
+        print("{0} exists - deleting contents before creating new non-timestamped backup.".format(backup_dir))
+        # Special-case /alert_channels vs alert-channels in the backup_functions list
+        if path.exists(backup_dir + '/alert_channels' ):
+            shutil.rmtree(backup_dir + '/alert_channels')
+        for subdir in backup_functions.keys():
+            if path.exists(backup_dir + '/' + subdir ):
+                shutil.rmtree(backup_dir + '/' + subdir)
+
     if arg_components:
         arg_components_list = arg_components.split(',')
 
@@ -46,7 +59,3 @@ def main(args, settings):
 
     if not arg_no_archive:
         archive(args, settings)
-
-    if aws_s3_bucket_name:
-        print('Upload archives to S3:')
-        s3_upload(args, settings)

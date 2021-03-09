@@ -6,8 +6,7 @@ name = PKG_NAME
 version = PKG_VERSION
 requires = [
     'requests',
-    'docopt',
-    'boto3'
+    'docopt'
 ]
 
 setup(

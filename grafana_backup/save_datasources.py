@@ -6,6 +6,7 @@ from grafana_backup.commons import print_horizontal_line, save_json
 
 def main(args, settings):
     backup_dir = settings.get('BACKUP_DIR')
+    timestamp_output = settings.get('TIMESTAMP_OUTPUT')
     timestamp = settings.get('TIMESTAMP')
     grafana_url = settings.get('GRAFANA_URL')
     http_get_headers = settings.get('HTTP_GET_HEADERS')
@@ -14,8 +15,12 @@ def main(args, settings):
     debug = settings.get('DEBUG')
     pretty_print = settings.get('PRETTY_PRINT')
 
-    folder_path = '{0}/datasources/{1}'.format(backup_dir, timestamp)
-    log_file = 'datasources_{0}.txt'.format(timestamp)
+    if timestamp_output:
+        folder_path = '{0}/datasources/{1}'.format(backup_dir, timestamp)
+        log_file = 'datasources_{0}.txt'.format(timestamp)
+    else:
+        folder_path = '{0}/datasources'.format(backup_dir)
+        log_file = 'datasources.txt'
 
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)

@@ -3,6 +3,7 @@
 __pycache__
 Pipfile.lock
 _OUTPUT_
+dashbs.bak
 venv/
 build/
 dist/
