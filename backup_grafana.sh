@@ -5,7 +5,6 @@ set -e
 trap 'echo -ne "\n:::\n:::\tCaught signal, exiting at line $LINENO, while running :${BASH_COMMAND}:\n:::\n"; exit' SIGINT SIGQUIT
 
 settings_file="${1:-grafanaSettings.json}"
-backup_dir="_OUTPUT_"
 
 if [[ ! -f "${settings_file}" ]]; then
 	echo "Usage:"
