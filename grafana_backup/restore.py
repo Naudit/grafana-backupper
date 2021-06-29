@@ -1,6 +1,7 @@
 from grafana_backup.create_org import main as create_org
 from grafana_backup.api_checks import main as api_checks
 from grafana_backup.create_folder import main as create_folder
+from grafana_backup.update_folder_permissions import main as update_folder_permissions
 from grafana_backup.create_datasource import main as create_datasource
 from grafana_backup.create_dashboard import main as create_dashboard
 from grafana_backup.create_alert_channel import main as create_alert_channel
@@ -73,6 +74,7 @@ def restore_components(args, settings, restore_functions, tmpdir):
 def restore_from_dir(args, arg_components, settings, restore_dir):
 
     restore_functions = { 'folder': create_folder,
+                            'folder_permissions': update_folder_permissions,
                             'datasource': create_datasource,
                             'dashboard': create_dashboard,
                             'alert_channel': create_alert_channel,
