@@ -18,10 +18,10 @@ def main(args, settings):
 
     if timestamp_output:
         folder_path = '{0}/organizations/{1}'.format(backup_dir, timestamp)
-        log_file = 'organaizations_{0}.txt'.format(timestamp)
+        log_file = 'organizations_{0}.txt'.format(timestamp)
     else:
         folder_path = '{0}/organizations'.format(backup_dir)
-        log_file = 'organaizations.txt'
+        log_file = 'organizations.txt'
 
     if http_get_headers_basic_auth:
         if not os.path.exists(folder_path):
